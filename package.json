@@ -1,0 +1,45 @@
+{
+  "name": "page-load",
+  "version": "0.0.1",
+  "description": "Hexlet project",
+  "main": "dist/index.js",
+  "scripts": {
+    "babel-node": "babel-node",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublish": "npm run build",
+    "eslint": "eslint",
+    "test": "jest"
+  },
+  "bin": {
+    "page-loader": "dist/bin/pageLoader.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeresvetS/project-lvl3-s71.git"
+  },
+  "author": "Peresvet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PeresvetS/project-lvl3-s71/issues"
+  },
+  "homepage": "https://github.com/PeresvetS/project-lvl3-s71#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "lodash": "*",
+    "axios": "*",
+    "nock": "*",
+    "mz": "*"
+  },
+  "devDependencies": {
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-preset-env": "*",
+    "babel-preset-stage-0": "*",
+    "eslint": "*",
+    "eslint-plugin-import": "*",
+    "eslint-config-airbnb-base": "*",
+    "babel-eslint": "*",
+    "eslint-plugin-jest": "^19.0.1",
+    "jest": "*"
+  }
+}
