@@ -6,10 +6,13 @@ import pageLoader from '../';
 program
     .version('0.0.1')
     .description('Download the website and use it locally.')
-    .option('-u, --url [target]')
-    .option('-o, --output [path to save]')
-    .arguments('<output><url>')
-    .action((output, url) => {
-      console.log(pageLoader(output, url));
+    .option('-o, --output [path], 'Path to save the website locally')
+    .arguments('<url>')
+    .action((url) => {
+        try {
+            console.log(pageLoader(url, commander.output));
+        } catch(err) {
+            console.log(err);
+        }
     })
     .parse(process.argv);
