@@ -32,6 +32,6 @@ test('test pageLoader', () => {
     pageLoader(url, output)
     .then(() => fs.readFile(path.resolve(output, 'localhost-test-.html'), 'utf-8'))
     .then(html => expect(html).toBe(correctOutput))
-    .then(() => done());
+    .then(done);
   });
 });
