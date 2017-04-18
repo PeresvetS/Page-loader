@@ -1,6 +1,6 @@
 {
   "name": "page-load",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "Hexlet project",
   "main": "dist/index.js",
   "scripts": {
@@ -25,7 +25,6 @@
   "homepage": "https://github.com/PeresvetS/project-lvl3-s71#readme",
   "dependencies": {
     "commander": "^2.9.0",
-    "lodash": "*",
     "axios": "*",
     "nock": "*",
     "mz": "*"

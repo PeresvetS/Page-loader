@@ -1,27 +1,20 @@
-import url from 'url';
-import fs from 'fs';
-import os from 'os';
 import path from 'path';
-import axios from 'axios';
+import fs from 'mz/fs';
+import axios from './lib/axiosFix';
+import createName from './lib/createName';
 
-const createName = (url) => {
-    const parsedUrl = url.parse(url);
-    const newName  = url.format({
-        hostname: parsedUrl.hostname.replace(/[^0-9a-z]/gi, '-'),
+const pageLoader = (address, outputPath = './') => {
+  try {
+    const newFileName = `${createName(address)}.html`;
+    const fullPathToOutput = path.resolve(outputPath, newFileName);
+    axios.get(address)
+    .then(response => fs.writeFile(fullPathToOutput, response.data))
+    .catch((err) => {
+      throw new Error(`Bad request ${err}`);
     });
-    return newName;
-}
-
-const pageLoader = (url, outputPath = './') => {
-    try {
-    const htmlGetResp = axios.get(url);
-    const tmpDir = fs.mkdtempSync(`${os.tmpdir() | path.sep}`);
-    const newFileName = createName(url);
-    const fullPathFile = path.resolve(outputPath, newFileName);
-    }
-    catch(err) {
-        console-log(err);
-    }
+  } catch (err) {
+    throw new Error(err);
+  }
 };
 
 export default pageLoader;
