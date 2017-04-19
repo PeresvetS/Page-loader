@@ -10,13 +10,14 @@ import createName from './lib/createName';
 const pageLoader = (address, outputPath = './') => {
   const [newPageName, fileDir] = createName(address);
   const tmpDir = fs.mkdtempSync(`${os.tmpdir()}/`);
+  const fullFilePath = path.resolve(outputPath, fileDir);
   const tmpfileDir = path.resolve(tmpDir, fileDir);
   const tmpPathPage = path.resolve(tmpDir, newPageName);
   fs.mkdirSync(tmpfileDir);
-  fs.mkdirSync(path.resolve(outputPath, fileDir));
+  fs.mkdirSync(fullFilePath);
   axios.get(address)
     .then((response) => {
-      const [parsedPage, urls] = parser(response.data, outputPath);
+      const [parsedPage, urls] = parser(response.data, fullFilePath);
       const savingPage = fs.writeFile(tmpPathPage, parsedPage);
       if (urls.length > 0) {
         const downloadFiles = downloader(urls, address, tmpfileDir);
