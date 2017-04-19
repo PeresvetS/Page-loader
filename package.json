@@ -1,6 +1,6 @@
 {
   "name": "page-load",
-  "version": "0.0.5",
+  "version": "0.2.5",
   "description": "Hexlet project",
   "main": "dist/index.js",
   "scripts": {
@@ -27,7 +27,9 @@
     "commander": "^2.9.0",
     "axios": "*",
     "nock": "*",
-    "mz": "*"
+    "mz": "*",
+    "cheerio": "*",
+    "fs-extra": "*"
   },
   "devDependencies": {
     "babel-cli": "*",

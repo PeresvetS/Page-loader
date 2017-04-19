@@ -1,4 +1,4 @@
-install: 
+install:
 	npm install
 
 run:
@@ -15,6 +15,6 @@ lint:
 	npm run eslint -- src/ __tests__
 
 test:
-		npm test
+		npm test __tests__/test.js
 
 .PHONY: test
