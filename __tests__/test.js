@@ -53,28 +53,21 @@ describe('test pageLoader', () => {
     const output = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
     pageLoader(host, output)
     .then(() => fs.readFile(path.resolve(output, 'localhost.html'), 'utf-8'))
-    .then((html) => {
-      expect(html).toBe(correctOutput);
-      done();
-    })
+    .then(html => expect(html).toBe(correctOutput))
+    .then(done())
     .catch(done.fail);
   });
+
   it('test file saving', (done) => {
     const output = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
     pageLoader(host, output)
-    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'styles.css'))
-      .then((css) => {
-        expect(css.data).toBe(cssFile.data);
-      }))
-    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'lib.js'))
-    .then((js) => {
-      expect(js.data).toBe(jsFile.data);
-    }))
-    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'tea.jpg'))
-    .then((jpg) => {
-      expect(jpg.data).toBe(jpgFile.data);
-      done();
-    }))
+    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'styles.css')))
+    .then(css => expect(css.data).toBe(cssFile.data))
+    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'lib.js')))
+    .then(js => expect(js.data).toBe(jsFile.data))
+    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'tea.jpg')))
+    .then(jpg => expect(jpg.data).toBe(jpgFile.data))
+    .then(done())
     .catch(done.fail);
   });
 });
