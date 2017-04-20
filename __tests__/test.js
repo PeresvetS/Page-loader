@@ -55,7 +55,7 @@ describe('test pageLoader', () => {
     .then(() => fs.readFile(path.resolve(output, 'localhost.html'), 'utf-8'))
     .then((html) => {
       expect(html).toBe(correctOutput);
-      done()
+      done();
     })
     .catch(done.fail);
   });
