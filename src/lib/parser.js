@@ -8,7 +8,7 @@ const targetTags = {
   img: 'src',
 };
 
-const parser = (page, dir) => {
+const parsePage = (page, dir) => {
   const $ = cheerio.load(page);
   const urls = Object.keys(targetTags)
   .reduce((acc, tag) =>
@@ -16,10 +16,11 @@ const parser = (page, dir) => {
       ...$(tag)
   .map((i, el) => $(el).attr(targetTags[tag]))
   .get()], []);
-  const parsedPage = urls.reduce((url, acc) =>
+
+  const newPage = urls.reduce((url, acc) =>
     url.replace(acc, `${dir}/${path.basename(acc)}`), page);
 
-  return [parsedPage, urls];
+  return [newPage, urls];
 };
 
-export default parser;
+export default parsePage;

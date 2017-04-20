@@ -2,13 +2,20 @@ import path from 'path';
 import os from 'os';
 import url from 'url';
 import fs from 'mz/fs';
-import Debug from 'debug';
+import _debug from 'debug';
 import fsEx from 'fs-extra';
 import axios from './lib/axiosFix';
-import parser from './lib/parser';
+import parsePage from './lib/parser';
 import createName from './lib/createName';
 
-const debug = Debug('page-loader');
+const debug = _debug('page-loader');
+
+const downloader = (links, site, dir) => links.map(link =>
+    axios.get(link, {
+      baseURL: url.resolve(site, '/'),
+      responseType: 'arraybuffer' })
+      .then(file =>
+        fs.writeFile(path.resolve(dir, path.basename(link)), file.data)));
 
 
 const pageLoader = (address, outputPath = './') => {
@@ -23,20 +30,15 @@ const pageLoader = (address, outputPath = './') => {
     .then(() => debug(`Folder ${tmpfileDir} is ready`))
     .then(() => axios.get(address))
       .then((response) => {
-        debug(`Page ${address} have loaded`);
-        const [parsedPage, links] = parser(response.data, fullFilePath);
-
-        const savingPage = fs.writeFile(tmpPathPage, parsedPage);
-
-        const downloadFiles = links.map(link =>
-          axios.get(link, { baseURL: url.resolve(address, '/'), responseType: 'arraybuffer' })
-            .then(file => fs.writeFile(path.resolve(tmpfileDir, path.basename(link)), file.data)));
-
-        return Promise.all([savingPage, downloadFiles]);
+        debug(`Page ${address} have been loaded`);
+        return parsePage(response.data, fullFilePath);
       })
-      .then(() => debug(`Page and files have saved in ${tmpDir}`))
+      .then(([newPage, links]) =>
+      Promise.all([fs.writeFile(tmpPathPage, newPage),
+        downloader(links, address, tmpfileDir)]))
+      .then(() => debug(`Page and files have been saved in ${tmpDir}`))
       .then(() => fsEx.move(tmpDir, outputPath, { overwrite: true }, () => {}))
-      .then(() => debug(`Page and files have moved to ${outputPath}`));
+      .then(() => debug(`Page and files have been moved to ${outputPath}`));
   });
 };
 
