@@ -20,8 +20,7 @@ const pageLoader = (address, outputPath = './') => {
     const tmpPathPage = path.resolve(tmpDir, newPageName);
     debug(`${tmpDir} have been created`);
     return fs.mkdir(tmpfileDir)
-    .then(() => fs.mkdir(fullFilePath))
-    .then(() => debug(`Folders ${tmpfileDir} and ${fullFilePath} are ready`))
+    .then(() => debug(`Folder ${tmpfileDir} is ready`))
     .then(() => axios.get(address))
       .then((response) => {
         debug(`Page ${address} have loaded`);
@@ -33,11 +32,11 @@ const pageLoader = (address, outputPath = './') => {
           axios.get(link, { baseURL: url.resolve(address, '/'), responseType: 'arraybuffer' })
             .then(file => fs.writeFile(path.resolve(tmpfileDir, path.basename(link)), file.data)));
 
-        return Promise.all([savingPage, downloadFiles])
-        .then(() => debug(`Page and files have saved in ${tmpDir}`))
-        .then(() => fsEx.move(tmpDir, outputPath, { overwrite: true },
-          debug(`Page and files have moved to ${outputPath}`)));
-      });
+        return Promise.all([savingPage, downloadFiles]);
+      })
+      .then(() => debug(`Page and files have saved in ${tmpDir}`))
+      .then(() => fsEx.move(tmpDir, outputPath, { overwrite: true }, () => {}))
+      .then(() => debug(`Page and files have moved to ${outputPath}`));
   });
 };
 

@@ -27,7 +27,7 @@ const correctOutput = `<!DOCTYPE html>
 
 </html>`;
 
-
+const htmlFile = path.resolve(testPath, 'index.html');
 const cssFile = path.resolve(testPath, 'localhost_files', 'styles.css');
 const jsFile = path.resolve(testPath, 'localhost_files', 'lib.js');
 const jpgFile = path.resolve(testPath, 'localhost_files', 'tea.jpg');
@@ -51,9 +51,9 @@ describe('test pageLoader', () => {
 
   it('test page saving', (done) => {
     const output = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
-    pageLoader(host, output)
+    pageLoader(host, 'output')
     .then(() => fs.readFile(path.resolve(output, 'localhost.html'), 'utf-8'))
-    .then(html => expect(html).toBe(correctOutput))
+    .then(html => expect(html.data).toBe(htmlFile))
     .then(done())
     .catch(done.fail);
   });
