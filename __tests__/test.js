@@ -4,15 +4,8 @@ import path from 'path';
 import fs from 'mz/fs';
 import pageLoader from '../src';
 
-
-const readFileS = file => fs.readFileSync(path.resolve('./__tests__/__fixtures__', 'localhost_files', file));
-const readFile = (dir, file) => fs.readFile(path.resolve(dir, 'localhost_files', file));
-
-const cssFile = readFileS('styles.css');
-const jsFile = readFileS('lib.js');
-const jpgFile = readFileS('tea.jpg');
-
-
+const host = 'http://localhost';
+const testPath = './__tests__/__fixtures__';
 const correctOutput = `<!DOCTYPE html>
 <html>
 
@@ -35,52 +28,53 @@ const correctOutput = `<!DOCTYPE html>
 </html>`;
 
 
-beforeEach(() => {
-  nock('http://localhost')
-  .get('/')
-  .reply(200, correctOutput)
-  .get('/css.styles.css')
-  .reply(200, cssFile)
-  .get('/js/lib.js')
-  .reply(200, jsFile)
-  .get('/img/tea.jpg')
-  .reply(200, jpgFile)
-  .get('/notExist')
-  .reply(404);
-});
+const cssFile = path.resolve(testPath, 'localhost_files', 'styles.css');
+const jsFile = path.resolve(testPath, 'localhost_files', 'lib.js');
+const jpgFile = path.resolve(testPath, 'localhost_files', 'tea.jpg');
+
 
 describe('test pageLoader', () => {
-  const url = 'http://localhost';
-  const output = fs.mkdtempSync(`${os.tmpdir()}/`);
+  beforeEach(() => {
+    nock('host')
+    .get('/')
+    .reply(200, correctOutput)
+    .get('/css.styles.css')
+    .reply(200, fs.readFileSync(cssFile))
+    .get('/js/lib.js')
+    .reply(200, fs.readFileSync(jsFile))
+    .get('/img/tea.jpg')
+    .reply(200, fs.readFileSync(jpgFile))
+    .get('/notExist')
+    .reply(404);
+  });
+
+
   it('test page saving', (done) => {
-    pageLoader(url, output);
-    fs.readFile(path.resolve(output, 'localhost-.html'), 'utf-8')
+    const output = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
+    pageLoader(host, output)
+    .then(() => fs.readFile(path.resolve(output, 'localhost.html'), 'utf-8'))
     .then((html) => {
       expect(html).toBe(correctOutput);
-      done();
+      done()
     })
-    .catch(done);
+    .catch(done.fail);
   });
   it('test file saving', (done) => {
-    const output2 = fs.mkdtempSync(`${os.tmpdir()}/`);
-    pageLoader(url, output2);
-    readFile(output, 'styles.css')
+    const output = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
+    pageLoader(host, output)
+    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'styles.css'))
       .then((css) => {
         expect(css.data).toBe(cssFile.data);
-        done();
-      })
-    .catch(done);
-    readFile(output, 'lib.js')
+      }))
+    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'lib.js'))
     .then((js) => {
       expect(js.data).toBe(jsFile.data);
-      done();
-    })
-    .catch(done);
-    readFile(output, 'tea.jpg')
+    }))
+    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'tea.jpg'))
     .then((jpg) => {
       expect(jpg.data).toBe(jpgFile.data);
       done();
-    })
-    .catch(done);
+    }))
+    .catch(done.fail);
   });
 });

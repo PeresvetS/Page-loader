@@ -1,6 +1,6 @@
 {
   "name": "page-load",
-  "version": "0.2.6",
+  "version": "0.3.2",
   "description": "Hexlet project",
   "main": "dist/index.js",
   "scripts": {
@@ -29,7 +29,8 @@
     "nock": "*",
     "mz": "*",
     "cheerio": "*",
-    "fs-extra": "*"
+    "fs-extra": "*",
+    "debug": "*"
   },
   "devDependencies": {
     "babel-cli": "*",
@@ -42,5 +43,12 @@
     "babel-eslint": "*",
     "eslint-plugin-jest": "^19.0.1",
     "jest": "*"
+  },
+  "jest" : {
+    "collectCoverage": true,
+    "coverageDirectory": "cover",
+    "coverageReporters": [
+      "lcov"
+    ]
   }
 }

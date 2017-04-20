@@ -2,7 +2,10 @@ install:
 	npm install
 
 run:
-	npm run babel-node -- src/bin/pageLoader.js $(1)
+	npm run babel-node -- ./src/bin/pageLoader.js $(1)
+
+debug:
+	DEBUG="page-loader:*" npm run babel-node -- ./src/bin/pageLoader.js $(1)
 
 build:
 		rm -rf dist
