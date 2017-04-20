@@ -10,7 +10,7 @@ import createName from './lib/createName';
 
 const debug = _debug('page-loader');
 
-const downloader = (links, site, dir) => links.map(link =>
+const download = (links, site, dir) => links.map(link =>
     axios.get(link, {
       baseURL: url.resolve(site, '/'),
       responseType: 'arraybuffer' })
@@ -20,26 +20,24 @@ const downloader = (links, site, dir) => links.map(link =>
 
 const pageLoader = (address, outputPath = './') => {
   const [newPageName, fileDir] = createName(address);
-  return fs.mkdtemp(`${os.tmpdir()}${path.sep}`)
-  .then((tmpDir) => {
-    const fullFilePath = path.resolve(outputPath, fileDir);
-    const tmpfileDir = path.resolve(tmpDir, fileDir);
-    const tmpPathPage = path.resolve(tmpDir, newPageName);
-    debug(`${tmpDir} have been created`);
-    return fs.mkdir(tmpfileDir)
-    .then(() => debug(`Folder ${tmpfileDir} is ready`))
-    .then(() => axios.get(address))
-      .then((response) => {
-        debug(`Page ${address} have been loaded`);
-        return parsePage(response.data, fullFilePath);
-      })
-      .then(([newPage, links]) =>
-      Promise.all([fs.writeFile(tmpPathPage, newPage),
-        downloader(links, address, tmpfileDir)]))
-      .then(() => debug(`Page and files have been saved in ${tmpDir}`))
-      .then(() => fsEx.move(tmpDir, outputPath, { overwrite: true }, () => {}))
-      .then(() => debug(`Page and files have been moved to ${outputPath}`));
-  });
+  const tmpDir = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
+  debug(`${tmpDir} have been created`);
+  const fullFilePath = path.resolve(outputPath, fileDir);
+  const tmpfileDir = path.resolve(tmpDir, fileDir);
+  const tmpPathPage = path.resolve(tmpDir, newPageName);
+  return fs.mkdir(tmpfileDir)
+  .then(() => debug(`Folder ${tmpfileDir} is ready`))
+  .then(() => axios.get(address))
+    .then((response) => {
+      debug(`Page ${address} have been loaded`);
+      return parsePage(response.data, fullFilePath);
+    })
+    .then(([newPage, links]) =>
+    Promise.all([fs.writeFile(tmpPathPage, newPage),
+      download(links, address, tmpfileDir)]))
+    .then(() => debug(`Page and files have been saved in ${tmpDir}`))
+    .then(() => fsEx.move(tmpDir, outputPath, { overwrite: true }, () => {}))
+    .then(() => debug(`Page and files have been moved to ${outputPath}`));
 };
 
 
