@@ -2,8 +2,9 @@ import os from 'os';
 import nock from 'nock';
 import path from 'path';
 import fs from 'mz/fs';
-import pageLoader from '../src';
+import pageLoader from '../src/';
 
+let output;
 const host = 'http://localhost';
 const testPath = './__tests__/__fixtures__';
 const correctOutput = `<!DOCTYPE html>
@@ -48,26 +49,52 @@ describe('test pageLoader', () => {
     .reply(404);
   });
 
+  beforeEach(() => {
+    output = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
+  });
 
   it('test page saving', (done) => {
-    const output = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
-    pageLoader(host, 'output')
+    pageLoader(host, output)
     .then(() => fs.readFile(path.resolve(output, 'localhost.html'), 'utf-8'))
-    .then(html => expect(html.data).toBe(htmlFile))
-    .then(done())
+    .then((html) => {
+      expect(html.data).toBe(htmlFile);
+    })
+    .then(done)
     .catch(done.fail);
   });
 
   it('test file saving', (done) => {
-    const output = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
     pageLoader(host, output)
     .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'styles.css')))
     .then(css => expect(css.data).toBe(cssFile.data))
     .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'lib.js')))
     .then(js => expect(js.data).toBe(jsFile.data))
     .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'tea.jpg')))
-    .then(jpg => expect(jpg.data).toBe(jpgFile.data))
-    .then(done())
+    .then((jpg) => {
+      expect(jpg.data).toBe(jpgFile.data);
+    })
+    .then(done)
     .catch(done.fail);
+  });
+
+
+  it('ENOTFOUND test ', (done) => {
+    pageLoader(host, './__fixtures__/test.txt')
+    .then(() => done.fail())
+    .catch(e => done(e));
+  });
+
+  it('ENOENT test ', (done) => {
+    pageLoader(host, './error/errr')
+    .then(() => done.fail())
+    .catch(e => done(e));
+  });
+
+  it('ENOTFOUND test ', (done) => {
+    pageLoader('http://localhost/error', output)
+    .catch((err) => {
+      expect(err.response.status).toBe(404);
+      done();
+    });
   });
 });
