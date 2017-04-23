@@ -1,6 +1,6 @@
 {
   "name": "page-load",
-  "version": "0.4.2",
+  "version": "0.9.0",
   "description": "Hexlet project",
   "main": "dist/index.js",
   "scripts": {

@@ -6,6 +6,7 @@ const targetTags = {
   link: 'href',
   script: 'src',
   img: 'src',
+  meta: 'content',
 };
 
 const parsePage = (page, dir) => {
@@ -17,8 +18,13 @@ const parsePage = (page, dir) => {
   .map((i, el) => $(el).attr(targetTags[tag]))
   .get()], []);
 
-  const newPage = urls.reduce((url, acc) =>
-    url.replace(acc, `${dir}/${path.basename(acc)}`), page);
+  const newPage = urls.reduce((url, acc) => {
+    const name = (path.dirname(acc) + path.basename(acc))
+    .replace(/\//gi, '-');
+    return url.replace(acc, `${dir}/${name.length < 10 ?
+       name :
+       name.slice(name.length / 1.2)}`);
+  }, page);
 
   return [newPage, urls];
 };

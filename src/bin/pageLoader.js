@@ -6,7 +6,7 @@ import colors from 'colors';
 import pageLoader from '../';
 
 program
-  .version('0.4.2')
+  .version('0.9.0')
   .description('Download the website and use it locally.')
   .option('-o, --output [path]', 'Path to save the website locally')
   .arguments('<url>')

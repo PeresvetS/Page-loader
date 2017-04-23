@@ -1,5 +1,6 @@
 import path from 'path';
 import os from 'os';
+import url from 'url';
 import debug from 'debug';
 import fs from 'mz/fs';
 import fsp from 'fs-extra';
@@ -10,17 +11,20 @@ import createName from './lib/createName';
 const log = debug('page-loader');
 
 const listrFiles = (ctx, data) => (ctx ? ctx.links = data : null);
-
 const listrPage = (ctx, data) => (ctx ? ctx.page = data : null);
 
-const downloadFiles = (links, site, dir) => Promise.all(links.map((link) => {
+const downloadFiles = (links, address, dir) => Promise.all(links.map((link) => {
   log(`File ${link} is ready`);
+  const { hostname } = url.parse(address);
+  const name = (path.dirname(link) + path.basename(link)).replace(/\//gi, '-');
   return axios.get(link, {
-    baseURL: site,
+    baseURL: `http://${hostname}`,
     responseType: 'arraybuffer' })
       .then(file =>
-        fs.writeFile(path.resolve(dir, path.basename(link)), file.data))
-        .catch(err => console.error(`✗  ${link} skipped, repsponse code: ${err.response.status} [skipped]`.yellow));
+        fs.writeFile(path.resolve(dir, name.length < 10 ?
+          name :
+          name.slice(name.length / 1.2)), file.data))
+        .catch(err => console.error(err.message));
 }));
 
 
