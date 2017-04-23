@@ -5,9 +5,9 @@ import fs from 'mz/fs';
 import pageLoader from '../src/';
 
 let output;
-const host = 'http://localhost';
-const address = 'http://localhost/test'
-const filesTestPath = 'localhost_test_files';
+const host = 'http://hexlet.io';
+const address = 'http://hexlet.io/courses';
+const filesTestPath = 'hexlet-io-courses_file';
 const testPath = './__tests__/__fixtures__';
 const correctOutput = `<!DOCTYPE html>
 <html>
@@ -30,24 +30,25 @@ const correctOutput = `<!DOCTYPE html>
 
 </html>`;
 
-const htmlFile = path.resolve(testPath, 'index.html');
-const cssFile = path.resolve(testPath, filesTestPath, 'styles.css');
-const jsFile = path.resolve(testPath, filesTestPath, 'lib.js');
-const jpgFile = path.resolve(testPath, filesTestPath, 'tea.jpg');
+const oldHtml = path.resolve(testPath, 'hexlet.html');
+const htmlFile = path.resolve(testPath, 'hexlet-io-courses.html');
+const cssFile = path.resolve(testPath, filesTestPath, '06b254846dd.css');
+const jsFile = path.resolve(testPath, filesTestPath, 'cfe020442af.js');
+const pngFile = path.resolve(testPath, filesTestPath, '0245fa81cede3144eimage.png');
 
 
 describe('test pageLoader', () => {
   beforeEach(() => {
     nock('host')
-    .get('/test')
-    .reply(200, correctOutput)
-    .get('test/css/styles.css')
+    .get('/courses')
+    .reply(301, fs.readFileSync(oldHtml))
+    .get('/assets/application-578043761259d7f2af351121161e8f0ae92e33375cc8cb236843706b254846dd.css')
     .reply(200, fs.readFileSync(cssFile))
-    .get('/test/js/lib.js')
+    .get('/assets/essential-4fac0fef0e085f0f6b4839482069fed772b0b7804e5871db23610cfe020442af.js')
     .reply(200, fs.readFileSync(jsFile))
-    .get('test/img/tea.jpg')
-    .reply(200, fs.readFileSync(jpgFile))
-    .get('test/notExist')
+    .get('https://cdn2.hexlet.io/attachments/d5df265bb0aa50bf1e61b9a700913825b9b34e20/store/b5c5d849575af3af6152cea4663c30e1f624620641b0245fa81cede3144e/image.png')
+    .reply(200, fs.readFileSync(pngFile))
+    .get('/notExist')
     .reply(404);
   });
 
@@ -56,9 +57,9 @@ describe('test pageLoader', () => {
   });
 
   it('test page saving', (done) => {
-    pageLoader(host, output)
-    .then(result => expect(result).toBe(`Success! The website ${host} have been saved in ${output}`))
-    .then(() => fs.readFile(path.resolve(output, 'localhost-.html'), 'utf-8'))
+    pageLoader(address, output)
+    .then(result => expect(result).toBe(`Success! The website ${address} have been saved in ${output}`))
+    .then(() => fs.readFile(path.resolve(output, 'hexlet-io-courses.html'), 'utf-8'))
     .then((html) => {
       expect(html.data).toBe(htmlFile);
     })
@@ -67,14 +68,14 @@ describe('test pageLoader', () => {
   });
 
   it('test file saving', (done) => {
-    pageLoader(host, output)
-    .then(() => fs.readFile(path.resolve(output, filesTestPath, 'styles.css')))
+    pageLoader(address, output)
+    .then(() => fs.readFile(path.resolve(output, filesTestPath, '06b254846dd.css')))
     .then(css => expect(css.data).toBe(cssFile.data))
-    .then(() => fs.readFile(path.resolve(output, filesTestPath, 'lib.js')))
+    .then(() => fs.readFile(path.resolve(output, filesTestPath, 'cfe020442af.js')))
     .then(js => expect(js.data).toBe(jsFile.data))
-    .then(() => fs.readFile(path.resolve(output, filesTestPath, 'tea.jpg')))
-    .then((jpg) => {
-      expect(jpg.data).toBe(jpgFile.data);
+    .then(() => fs.readFile(path.resolve(output, filesTestPath, '0245fa81cede3144eimage.png')))
+    .then((png) => {
+      expect(png.data).toBe(pngFile.data);
     })
     .then(done)
     .catch(done.fail);
@@ -82,19 +83,19 @@ describe('test pageLoader', () => {
 
 
   it('ENOTFOUND test ', (done) => {
-    pageLoader(host, './__fixtures__/test.txt')
+    pageLoader(address, './__fixtures__/test.txt')
     .then(done.fail)
     .catch(done);
   });
 
   it('ENOENT test ', (done) => {
-    pageLoader(host, './error/errr')
+    pageLoader(address, './error/errr')
     .then(done.fail)
     .catch(done);
   });
 
   it('ENOTFOUND test ', (done) => {
-    pageLoader('http://localhost/test/error', output)
+    pageLoader('http://hexlet.io/error', output)
     .then(done.fail)
     .catch(done);
   });

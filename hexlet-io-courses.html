@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html prefix='og: http://ogp.me/ns#'>
+<head>
+<script type="text/javascript">var _rollbarConfig = {"accessToken":"ffe1d429465e4a398dbb4a64d10b923b","captureUncaught":true,"payload":{"client":{"source_map_enabled":true,"code_version":null,"guess_uncaught_frames":true},"environment":"production"}};</script>
+<script type="text/javascript">!function(r){function e(t){if(o[t])return o[t].exports;var n=o[t]={exports:{},id:t,loaded:!1};return r[t].call(n.exports,n,n.exports,e),n.loaded=!0,n.exports}var o={};return e.m=r,e.c=o,e.p="",e(0)}([function(r,e,o){"use strict";var t=o(1).Rollbar,n=o(2);_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||"https://d37gvrvc0wt4s1.cloudfront.net/js/v1.9/rollbar.min.js";var a=t.init(window,_rollbarConfig),i=n(a,_rollbarConfig);a.loadFull(window,document,!_rollbarConfig.async,_rollbarConfig,i)},function(r,e){"use strict";function o(r){return function(){try{return r.apply(this,arguments)}catch(e){try{console.error("[Rollbar]: Internal error",e)}catch(o){}}}}function t(r,e,o){window._rollbarWrappedError&&(o[4]||(o[4]=window._rollbarWrappedError),o[5]||(o[5]=window._rollbarWrappedError._rollbarContext),window._rollbarWrappedError=null),r.uncaughtError.apply(r,o),e&&e.apply(window,o)}function n(r){var e=function(){var e=Array.prototype.slice.call(arguments,0);t(r,r._rollbarOldOnError,e)};return e.belongsToShim=!0,e}function a(r){this.shimId=++c,this.notifier=null,this.parentShim=r,this._rollbarOldOnError=null}function i(r){var e=a;return o(function(){if(this.notifier)return this.notifier[r].apply(this.notifier,arguments);var o=this,t="scope"===r;t&&(o=new e(this));var n=Array.prototype.slice.call(arguments,0),a={shim:o,method:r,args:n,ts:new Date};return window._rollbarShimQueue.push(a),t?o:void 0})}function l(r,e){if(e.hasOwnProperty&&e.hasOwnProperty("addEventListener")){var o=e.addEventListener;e.addEventListener=function(e,t,n){o.call(this,e,r.wrap(t),n)};var t=e.removeEventListener;e.removeEventListener=function(r,e,o){t.call(this,r,e&&e._wrapped?e._wrapped:e,o)}}}var c=0;a.init=function(r,e){var t=e.globalAlias||"Rollbar";if("object"==typeof r[t])return r[t];r._rollbarShimQueue=[],r._rollbarWrappedError=null,e=e||{};var i=new a;return o(function(){if(i.configure(e),e.captureUncaught){i._rollbarOldOnError=r.onerror,r.onerror=n(i);var o,a,c="EventTarget,Window,Node,ApplicationCache,AudioTrackList,ChannelMergerNode,CryptoOperation,EventSource,FileReader,HTMLUnknownElement,IDBDatabase,IDBRequest,IDBTransaction,KeyOperation,MediaController,MessagePort,ModalWindow,Notification,SVGElementInstance,Screen,TextTrack,TextTrackCue,TextTrackList,WebSocket,WebSocketWorker,Worker,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload".split(",");for(o=0;o<c.length;++o)a=c[o],r[a]&&r[a].prototype&&l(i,r[a].prototype)}return e.captureUnhandledRejections&&(i._unhandledRejectionHandler=function(r){var e=r.reason,o=r.promise,t=r.detail;!e&&t&&(e=t.reason,o=t.promise),i.unhandledRejection(e,o)},r.addEventListener("unhandledrejection",i._unhandledRejectionHandler)),r[t]=i,i})()},a.prototype.loadFull=function(r,e,t,n,a){var i=function(){var e;if(void 0===r._rollbarPayloadQueue){var o,t,n,i;for(e=new Error("rollbar.js did not load");o=r._rollbarShimQueue.shift();)for(n=o.args,i=0;i<n.length;++i)if(t=n[i],"function"==typeof t){t(e);break}}"function"==typeof a&&a(e)},l=!1,c=e.createElement("script"),d=e.getElementsByTagName("script")[0],p=d.parentNode;c.crossOrigin="",c.src=n.rollbarJsUrl,c.async=!t,c.onload=c.onreadystatechange=o(function(){if(!(l||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState)){c.onload=c.onreadystatechange=null;try{p.removeChild(c)}catch(r){}l=!0,i()}}),p.insertBefore(c,d)},a.prototype.wrap=function(r,e){try{var o;if(o="function"==typeof e?e:function(){return e||{}},"function"!=typeof r)return r;if(r._isWrap)return r;if(!r._wrapped){r._wrapped=function(){try{return r.apply(this,arguments)}catch(e){throw e._rollbarContext=o()||{},e._rollbarContext._wrappedSource=r.toString(),window._rollbarWrappedError=e,e}},r._wrapped._isWrap=!0;for(var t in r)r.hasOwnProperty(t)&&(r._wrapped[t]=r[t])}return r._wrapped}catch(n){return r}};for(var d="log,debug,info,warn,warning,error,critical,global,configure,scope,uncaughtError,unhandledRejection".split(","),p=0;p<d.length;++p)a.prototype[d[p]]=i(d[p]);r.exports={Rollbar:a,_rollbarWindowOnError:t}},function(r,e){"use strict";r.exports=function(r,e){return function(o){if(!o&&!window._rollbarInitialized){var t=window.RollbarNotifier,n=e||{},a=n.globalAlias||"Rollbar",i=window.Rollbar.init(n,r);i._processShimQueue(window._rollbarShimQueue||[]),window[a]=i,window._rollbarInitialized=!0,t.processPayloads()}}}}]);</script>
+<title>/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/t.io</title>
+<link rel="shortcut icon" type="image/x-icon" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/f527c1b8502b6.ico" />
+<link rel="shortcut icon" type="image/png" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/a00c0039409a75.png" sizes="196x196" />
+<link rel="shortcut icon" type="image/png" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/78d18cadf843c6.png" sizes="96x96" />
+<link rel="shortcut icon" type="image/png" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/f783bb318707a2.png" sizes="32x32" />
+<link rel="shortcut icon" type="image/png" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/d2afab400eb719.png" sizes="16x16" />
+<link rel="shortcut icon" type="image/png" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/7da7c5f6ead2a.png" sizes="128x128" />
+<link rel="shortcut icon" type="image/png" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/819a96f72286cfc.png" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" type="image/x-icon" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/28ce70b92fc013e.png" sizes="57x57" />
+<link rel="apple-touch-icon-precomposed" type="image/x-icon" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/3b0fbfa077d834e.png" sizes="114x114" />
+<link rel="apple-touch-icon-precomposed" type="image/x-icon" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/0eae30e83f90294.png" sizes="72x72" />
+<link rel="apple-touch-icon-precomposed" type="image/x-icon" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/82ad319d58b17fd.png" sizes="144x144" />
+<link rel="apple-touch-icon-precomposed" type="image/x-icon" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/2fd9ba9e5ac900f.png" sizes="60x60" />
+<link rel="apple-touch-icon-precomposed" type="image/x-icon" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/10e99223bba2d61.png" sizes="120x120" />
+<link rel="apple-touch-icon-precomposed" type="image/x-icon" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/e3ed7d23743314a.png" sizes="76x76" />
+<link rel="apple-touch-icon-precomposed" type="image/x-icon" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/68d616383497540.png" sizes="152x152" />
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/. ' name='application-name'>
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/.#FFFFFF' name='msapplication-TileColor'>
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/2ad319d58b17fd.png' name='msapplication-TileImage'>
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/7da7c5f6ead2a.png' name='msapplication-square70x70logo'>
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/38557201b2571a.png' name='msapplication-square150x150logo'>
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/b216c73843a5ce.png' name='msapplication-wide310x150logo'>
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/4c36007079f4e2.png' name='msapplication-square310x310logo'>
+
+<meta name="csrf-param" content="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/oken" />
+<meta name="csrf-token" content="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/Dz2eJpFFbuVAw==" />
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/ale=1.0' name='viewport'>
+<script>
+//<![CDATA[
+window.gon={};gon.current_user={"id":null,"guest":true,"admin":false};gon.token="/PxFppWCpIddKxBNkSNMblmmtAxg5VG/eIy4HVbH6sj4f6jXZ2N8hQ+V214icv/z9U/LXFbgpCOMKe9Qdh9O6A==";gon.disqus_name="hexlet-eng";gon.locale="en";gon.rails_env="production";gon.analytics_events={"SIGNED_UP":"Signed up","SUBSCRIBED_TO_PLAN":"Subscribed to plan","STARTED_COURSE":"Started course","JOINED_STACK":"Joined stack","FINISHED_LESSON":"Finished lesson","FINISHED_COURSE":"Finished course","FINISHED_STACK":"Finished stack","FINISHED_THEORY":"Finished Theory Unit","FINISHED_QUIZ":"Finished Quiz Unit","FINISHED_EXERCISE":"Finished Exercise Unit","RECURRING_CHARGE":"Recurring charge","CHARGE_PAYMENT":"Charge payment","PAYMENT":"Payment","COMPLETED_WIZARD":"Completed wizard"};gon.subdomains=["en.hexlet.io","ru.hexlet.io"];gon.images={"secure_payment":"/assets/secure_payment-65c69d1a5efbb8fb7adf6f59697003b0996920cd54bdee7d7a558cb7d961c7ad.png"};
+//]]>
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+  if (gon.current_user.guest) {
+    ga('create', 'UA-1360700-51', 'auto');
+  } else {
+    ga('create', 'UA-1360700-51', 'auto',  { 'userId': gon.current_user.id });
+  }
+  ga('send', 'pageview');
+</script>
+
+<script src="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/cfe020442af.js" defer="defer"></script>
+
+
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/ns.rss" />
+<link rel="stylesheet" media="all" href="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/06b254846dd.css" />
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/.website' property='og:type'>
+<meta content='Courses - Hexlet.io' property='og:title'>
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/urses' property='og:url'>
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/ exercises' name='description'>
+<meta content='/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/ exercises' property='og:description'>
+
+</head>
+<body>
+<nav class='navbar navbar-light hexlet-navbar navbar-toggleable-md'>
+<button aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation' class='navbar-toggler' data-target='#navbarResponsive' data-toggle='collapse' type='button'>
+<span class='navbar-toggler-icon'></span>
+</button>
+<div class='navbar-collapse collapse' id='navbarResponsive'>
+<a aria-hidden='true' class='navbar-brand mr-4' href='/'>
+Hexlet
+</a>
+<ul class='navbar-nav mr-auto'>
+<li class="nav-item"><a class="nav-link  active" href="/courses"><span class='fa fa-university hexlet-header-icon'></span>
+Courses
+</a></li><li class='nav-item'>
+<a class="nav-link" href="/pricing"><span class='fa fa-dollar hexlet-header-icon'></span>
+Pricing
+</a></li>
+</ul>
+<ul class='navbar-nav' id='notifications'></ul>
+<ul class='navbar-nav'>
+<li class='nav-item mr-2'><a class="nav-link" href="https://hexlet.io/session/new?from=https%3A%2F%2Fen.hexlet.io%2Fcourses">Log in</a></li>
+<li class='nav-item'><form class="button_to" method="get" action="/u/new?from=https%3A%2F%2Fen.hexlet.io%2Fcourses"><input class="btn btn-success navbar-btn" type="submit" value="Create free account" /></form></li>
+</ul>
+</div>
+</nav>
+<div class='text-center'>
+<div class='display-4 text-warning'>Hexlet doesn not really work properly in your browser, because it is pretty old. Please, upgrade.</div>
+</div>
+
+<div class='container py-2'>
+
+<div class='container'>
+<div class='row mt-5'>
+<div class='col-xs-12'>
+<h1 class='display-4 mb-5 text-center'>Courses</h1>
+<div class='row pb-5'>
+<div class='col-lg-4 col-sm-6 col-xs-12 mb-4'>
+<div class='card' itemscope itemtype='http://schema.org/Course'>
+<div class='hexlet-ribbon-wrapper-green'>
+<div class='hexlet-ribbon-green'>FREE</div>
+</div>
+<a href="/courses/intro_to_programming"><img itemprop="image" class="attachment course image card-img-top img-fluid hexlet-course-image" alt="Intro to Programming" src="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/0245fa81cede3144eimage.png" />
+</a><div class='card-block text-center'>
+<h3 class='h2 lead mb-0' itemprop='name'><a href="/courses/intro_to_programming">Intro to Programming</a></h3>
+</div>
+</div>
+
+</div>
+<div class='col-lg-4 col-sm-6 col-xs-12 mb-4'>
+<div class='card' itemscope itemtype='http://schema.org/Course'>
+<div class='hexlet-ribbon-wrapper-green'>
+<div class='hexlet-ribbon-green'>FREE</div>
+</div>
+<a href="/courses/introduction_to_c_programming_language"><img itemprop="image" class="attachment course image card-img-top img-fluid hexlet-course-image" alt="Intro to C programming language" src="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/e61014bdd34ba2242image.png" />
+</a><div class='card-block text-center'>
+<h3 class='h2 lead mb-0' itemprop='name'><a href="/courses/introduction_to_c_programming_language">Intro to C programming language</a></h3>
+</div>
+</div>
+
+</div>
+<div class='col-lg-4 col-sm-6 col-xs-12 mb-4'>
+<div class='card' itemscope itemtype='http://schema.org/Course'>
+<a href="/courses/regular_expressions"><img itemprop="image" class="attachment course image card-img-top img-fluid hexlet-course-image" alt="Regular expressions" src="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/3421f783ede79592eimage.png" />
+</a><div class='card-block text-center'>
+<h3 class='h2 lead mb-0' itemprop='name'><a href="/courses/regular_expressions">Regular expressions</a></h3>
+</div>
+</div>
+
+</div>
+<div class='col-lg-4 col-sm-6 col-xs-12 mb-4'>
+<div class='card' itemscope itemtype='http://schema.org/Course'>
+<a href="/courses/ansible_basics"><img itemprop="image" class="attachment course image card-img-top img-fluid hexlet-course-image" alt="Ansible basics" src="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/88037b29f15ce6da7image.png" />
+</a><div class='card-block text-center'>
+<h3 class='h2 lead mb-0' itemprop='name'><a href="/courses/ansible_basics">Ansible basics</a></h3>
+</div>
+</div>
+
+</div>
+<div class='col-lg-4 col-sm-6 col-xs-12 mb-4'>
+<div class='card' itemscope itemtype='http://schema.org/Course'>
+<div class='hexlet-ribbon-wrapper-green'>
+<div class='hexlet-ribbon-green'>FREE</div>
+</div>
+<a href="/courses/basics_of_bash"><img itemprop="image" class="attachment course image card-img-top img-fluid hexlet-course-image" alt="Basics of Bash" src="/home/peresvet/project-lvl3-s71/hexlet-io-courses_file/ddad4cce5f2a01bb9image.png" />
+</a><div class='card-block text-center'>
+<h3 class='h2 lead mb-0' itemprop='name'><a href="/courses/basics_of_bash">Basics of Bash</a></h3>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<footer class='footer hexlet-footer py-5 mt-5 text-muted'>
+<div class='container'>
+<div class='row'>
+<div class='col-lg-4 col-sm-12 col-12 mt-1'>
+<div class='h4 hexlet-light-title'>
+Hexlet.io
+<i class='hexlet-font-weight-lighter'>βeta,</i>
+2017
+</div>
+<a href="mailto:support@hexlet.io">support@hexlet.io</a>
+/
+<a href="/pages/faq">FAQ</a>
+<div class='pr-2'>
+<hr>
+</div>
+<p>
+<ul class='nav flex-column'>
+<li class='nav-item'><a href="/pages/about">About us</a></li>
+<!-- %li.nav-item= link_to t('.help'), help_pages_curl -->
+<!-- %li.nav-item= link_to t('.testimonials'), page_path('testimonials') -->
+<li class='nav-item'><a href="/pages/tos">Terms of service</a></li>
+</ul>
+</p>
+<p class='mt-2'>
+Hexlet Ltd
+<br>
+Puolikkotie 8, 02230 Espoo, Finland
+<br>
+VAT ID: 2664160-7
+</p>
+</div>
+<div class='col-lg-3 col-sm-6 col-12 mt-1'>
+<div class='h5'>Follow us</div>
+<ul class='nav flex-column'>
+<li class='nav-item'>
+<span class='fa fa-newspaper-o'></span>
+&nbsp;
+<a href="/blog">Blog</a>
+</li>
+<li class='nav-item'>
+<span class='fa fa-video-camera'></span>
+&nbsp;
+<a href="https://www.youtube.com/channel/UCBmKU1FHwhAoljWDORWgcRA"> youtube</a>
+</li>
+<li class='nav-item'>
+<span class='fa fa-twitter'></span>
+&nbsp;
+<a href="http://twitter.com/Hexlet_IO"> twitter</a>
+</li>
+<li class='nav-item'>
+<span class='fa fa-facebook'></span>
+&nbsp;
+<a href="https://www.facebook.com/Hexlet.io"> facebook</a>
+</li>
+<li>
+<span class='fa fa-history mt-3'></span>
+&nbsp;
+<a href="http://changelog.hexlet.io">Changelog</a>
+</li>
+</ul>
+</div>
+<div class='col-lg-3 col-sm-6 col-12 mt-1'>
+<div class='h5'>Learn more</div>
+<ul class='nav flex-column'>
+<li class='nav-item'><a href="/news">Hexlet News</a></li>
+<li class='nav-item'><a href="https://en.hexlet.io/gift">Gifts</a></li>
+<li class='nav-item'><a href="/my/blog_posts">My blog posts</a></li>
+</ul>
+</div>
+<div class='col-lg-2 col-sm-6 col-12 mt-1'>
+<ul class='nav flex-column mt-4'>
+<li class='nav-item'><a href="/community">Community</a></li>
+<li class='nav-item'><a href="https://en.hexlet.io/feedback">Ideas and feedback</a></li>
+<!-- %li.nav-item= link_to t('.jobs'), jobs_path -->
+<!-- %li.nav-item= link_to t('.for_teams'), teams_path -->
+<!-- %li.nav-item= link_to t('.business'), business_root_path -->
+<!-- %li.nav-item= link_to t('.mentorship'), mentorship_root_path -->
+<!-- %li.nav-item= link_to t('.teacher'), teacher_courses_path -->
+</ul>
+</div>
+</div>
+</div>
+</footer>
+
+</body>
+</html>

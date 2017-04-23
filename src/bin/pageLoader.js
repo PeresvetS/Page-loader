@@ -6,8 +6,8 @@ import colors from 'colors';
 import pageLoader from '../';
 
 program
-  .version('0.9.0')
-  .description('Download the website and use it locally.')
+  .version('1.0.6')
+  .description('Download the web page and use it locally.')
   .option('-o, --output [path]', 'Path to save the website locally')
   .arguments('<url>')
   .action((url) => {
@@ -18,9 +18,10 @@ program
           new Listr([
             {
               title: 'Uploading'.cyan,
-              task: ctx => pageLoader(url, program.output, ctx)
-              .then(res => (ctx.res = res))
-                .then(() => new Listr([
+              task: async (ctx) => {
+                const res = await pageLoader(url, program.output, ctx);
+                ctx.res = res;
+                return new Listr([
                   {
                     title: 'Loading page'.cyan,
                     task: () => console.log((`${'✔'.green}  Page ${ctx.page} is ready\n`)),
@@ -31,15 +32,15 @@ program
                     task: () => ctx.links.forEach(link =>
                     console.log((`${'✔'.green}  File ${link} is ready`))),
                   },
-                ])),
+                ]);
+              },
             },
-
           ]),
       },
     ]);
     return tasks.run()
          .then((msg) => {
-           console.log((msg.res).green);
+           console.log(`${(msg.res).green}${'\nAnd skipped files:'.cyan}`);
          })
          .catch((err) => {
            if (err.response) {
