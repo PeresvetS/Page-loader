@@ -5,7 +5,7 @@ const createName = (address) => {
   const regExpRepl = /[^0-9a-z]/gi;
   const newName = url.format({
     hostname: hostname.replace(regExpRepl, '-'),
-    pathname: pathname.replace(regExpRepl, '-').slice(0, -1),
+    pathname: pathname.replace(regExpRepl, '-'),
   });
   return [`${newName}.html`, `${newName}_file`];
 };

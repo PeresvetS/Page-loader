@@ -6,6 +6,8 @@ import pageLoader from '../src/';
 
 let output;
 const host = 'http://localhost';
+const address = 'http://localhost/test'
+const filesTestPath = 'localhost_test_files';
 const testPath = './__tests__/__fixtures__';
 const correctOutput = `<!DOCTYPE html>
 <html>
@@ -29,23 +31,23 @@ const correctOutput = `<!DOCTYPE html>
 </html>`;
 
 const htmlFile = path.resolve(testPath, 'index.html');
-const cssFile = path.resolve(testPath, 'localhost_files', 'styles.css');
-const jsFile = path.resolve(testPath, 'localhost_files', 'lib.js');
-const jpgFile = path.resolve(testPath, 'localhost_files', 'tea.jpg');
+const cssFile = path.resolve(testPath, filesTestPath, 'styles.css');
+const jsFile = path.resolve(testPath, filesTestPath, 'lib.js');
+const jpgFile = path.resolve(testPath, filesTestPath, 'tea.jpg');
 
 
 describe('test pageLoader', () => {
   beforeEach(() => {
     nock('host')
-    .get('/')
+    .get('/test')
     .reply(200, correctOutput)
-    .get('/css.styles.css')
+    .get('test/css/styles.css')
     .reply(200, fs.readFileSync(cssFile))
-    .get('/js/lib.js')
+    .get('/test/js/lib.js')
     .reply(200, fs.readFileSync(jsFile))
-    .get('/img/tea.jpg')
+    .get('test/img/tea.jpg')
     .reply(200, fs.readFileSync(jpgFile))
-    .get('/notExist')
+    .get('test/notExist')
     .reply(404);
   });
 
@@ -55,7 +57,8 @@ describe('test pageLoader', () => {
 
   it('test page saving', (done) => {
     pageLoader(host, output)
-    .then(() => fs.readFile(path.resolve(output, 'localhost.html'), 'utf-8'))
+    .then(result => expect(result).toBe(`Success! The website ${host} have been saved in ${output}`))
+    .then(() => fs.readFile(path.resolve(output, 'localhost-.html'), 'utf-8'))
     .then((html) => {
       expect(html.data).toBe(htmlFile);
     })
@@ -65,11 +68,11 @@ describe('test pageLoader', () => {
 
   it('test file saving', (done) => {
     pageLoader(host, output)
-    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'styles.css')))
+    .then(() => fs.readFile(path.resolve(output, filesTestPath, 'styles.css')))
     .then(css => expect(css.data).toBe(cssFile.data))
-    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'lib.js')))
+    .then(() => fs.readFile(path.resolve(output, filesTestPath, 'lib.js')))
     .then(js => expect(js.data).toBe(jsFile.data))
-    .then(() => fs.readFile(path.resolve(output, 'localhost_files', 'tea.jpg')))
+    .then(() => fs.readFile(path.resolve(output, filesTestPath, 'tea.jpg')))
     .then((jpg) => {
       expect(jpg.data).toBe(jpgFile.data);
     })
@@ -80,21 +83,19 @@ describe('test pageLoader', () => {
 
   it('ENOTFOUND test ', (done) => {
     pageLoader(host, './__fixtures__/test.txt')
-    .then(() => done.fail())
-    .catch(e => done(e));
+    .then(done.fail)
+    .catch(done);
   });
 
   it('ENOENT test ', (done) => {
     pageLoader(host, './error/errr')
-    .then(() => done.fail())
-    .catch(e => done(e));
+    .then(done.fail)
+    .catch(done);
   });
 
   it('ENOTFOUND test ', (done) => {
-    pageLoader('http://localhost/error', output)
-    .catch((err) => {
-      expect(err.response.status).toBe(404);
-      done();
-    });
+    pageLoader('http://localhost/test/error', output)
+    .then(done.fail)
+    .catch(done);
   });
 });
