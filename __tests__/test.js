@@ -44,7 +44,7 @@ describe('test pageLoader', () => {
     .then((html) => {
       expect(html.data).toBe(htmlFile);
     })
-    .then(done)
+    .then(done())
     .catch(done.fail);
   });
 
@@ -58,7 +58,7 @@ describe('test pageLoader', () => {
     .then((png) => {
       expect(png.data).toBe(pngFile.data);
     })
-    .then(done)
+    .then(done())
     .catch(done.fail);
   });
 
