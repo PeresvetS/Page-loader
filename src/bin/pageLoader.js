@@ -2,11 +2,11 @@
 
 import program from 'commander';
 import Listr from 'listr';
-import colors from 'colors';
+import 'colors';
 import pageLoader from '../';
 
 program
-  .version('1.0.6')
+  .version('1.0.8')
   .description('Download the web page and use it locally.')
   .option('-o, --output [path]', 'Path to save the website locally')
   .arguments('<url>')

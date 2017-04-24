@@ -15,7 +15,7 @@ publish:
 	npm publish
 
 lint:
-	npm run eslint -- src/ __tests__
+	npm run eslint -- src/ __tests_/test.js_
 
 test:
 		npm test __tests__/test.js

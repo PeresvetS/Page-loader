@@ -9,26 +9,7 @@ const host = 'http://hexlet.io';
 const address = 'http://hexlet.io/courses';
 const filesTestPath = 'hexlet-io-courses_file';
 const testPath = './__tests__/__fixtures__';
-const correctOutput = `<!DOCTYPE html>
-<html>
 
-<head>
-  <meta charset="utf-8">
-  <title>hello</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="js/index.js" defer></script>
-</head>
-
-<body>
-  <div class="container">
-    <h1>Hello, World!</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-      dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <img src="img/tea.jpg" alt="image">
-  </div>
-</body>
-
-</html>`;
 
 const oldHtml = path.resolve(testPath, 'hexlet.html');
 const htmlFile = path.resolve(testPath, 'hexlet-io-courses.html');
@@ -39,9 +20,9 @@ const pngFile = path.resolve(testPath, filesTestPath, '0245fa81cede3144eimage.pn
 
 describe('test pageLoader', () => {
   beforeEach(() => {
-    nock('host')
+    nock(host)
     .get('/courses')
-    .reply(301, fs.readFileSync(oldHtml))
+    .reply(200, fs.readFileSync(oldHtml))
     .get('/assets/application-578043761259d7f2af351121161e8f0ae92e33375cc8cb236843706b254846dd.css')
     .reply(200, fs.readFileSync(cssFile))
     .get('/assets/essential-4fac0fef0e085f0f6b4839482069fed772b0b7804e5871db23610cfe020442af.js')
